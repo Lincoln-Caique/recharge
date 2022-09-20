@@ -1,0 +1,22 @@
+
+{% extends "index.html" %}
+<title>{% block title %} Login {% endblock %}</title>
+
+{% block content %}
+<form method="POST">
+    
+    <div class="form-group">
+        <label for="id"> Identificação única</label>
+        <input type="id" class="form-control" name="id" id="id" placeholder="Digite  a identificação única">
+    </div>
+    <div class="form-group">
+        <label for="password"> Senha </label>
+        <input type="password" class="form-control" name="password" id="password" placeholder="Digite a senha">
+    </div>
+    
+    <br/>
+    <button type="submit" class="btn btn-primary">Entrar</button>
+</form>
+{% endblock %}
+
+

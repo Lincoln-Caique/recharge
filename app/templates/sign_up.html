@@ -1,0 +1,29 @@
+
+{% extends "index.html" %}
+<title>{% block title %} Sign Up {% endblock %}</title>
+
+{% block content %}
+   <form method="POST">
+        <h3 align="center">Sign Up</h3>
+        <div class="form-group">
+            <label for="name"> Nome</label>
+            <input type="name" class="form-control" name="name" id="name" placeholder="Coloque o nome completo">
+        </div>
+        <div class="form-group">
+            <label for="id"> Identificação única</label>
+            <input type="id" class="form-control" name="id" id="id" placeholder="Coloque a identificação única">
+        </div>
+        <div class="form-group">
+            <label for="password1"> Senha </label>
+            <input type="password1" class="form-control" name="password1" id="password1" placeholder="Coloque a senha">
+        </div>
+        <div class="form-group">
+            <label for="password2"> Senha(Confirme) </label>
+            <input type="password2" class="form-control" name="password2" id="password2" placeholder="Confoirme a senha">
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-primary">Submeter</button>
+   </form>
+{% endblock %}
+
+

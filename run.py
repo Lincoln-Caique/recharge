@@ -1,10 +1,13 @@
 from flask import Flask, render_template, jsonify, request
+from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine, Column, String, Integer,Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from flask_marshmallow import Marshmallow
 
+
+from app.view import views
+from app.auth import auth
 
 
 
@@ -49,9 +52,7 @@ users_schema = UserSchema(many=True)
 
 
 
-@app.route('/')
-def index():
-    return render_template("index.html")
+
 
 
 
@@ -105,6 +106,9 @@ def delete_user(registration):
 
 
 
+#Routes pages
+app.register_blueprint(views, url_prefix='/')
+app.register_blueprint(auth, url_prefix='/')
 
 
 if __name__ == '__main__':
