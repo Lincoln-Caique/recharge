@@ -1,10 +1,15 @@
+from time import timezone
+from xmlrpc.client import DateTime
 from flask import Flask, render_template, jsonify, request
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine, Column, String, Integer,Float
+from sqlalchemy import create_engine, Column, String, Integer,Float,ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+
+from flask_login import UserMixin
+from sqlalchemy.sql import func
 
 from app.view import views
 from app.auth import auth
@@ -13,19 +18,21 @@ from app.auth import auth
 
 
 app = Flask(__name__,static_folder = "./app/static",template_folder = "./app/templates")
+app.secret_key = 'super secret key'
 
 ma = Marshmallow(app)
 
 
 
 #Configurate
-engine = create_engine('mysql+pymysql://root:root@localhost:3306/recharge')
+engine = create_engine('mysql+pymysql://root:root@localhost:3306/{DB_NAME}')
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()
 
+
 #Entities
-class Users(Base):
+class Users(Base,UserMixin):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
