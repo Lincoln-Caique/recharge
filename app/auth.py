@@ -4,7 +4,10 @@ from xmlrpc.client import boolean
 from flask import Blueprint, render_template, request,flash, url_for,redirect
 
 from  werkzeug.security import generate_password_hash, check_password_hash
-# from .models import Users,session
+from .models import Users
+from . import session
+
+
 
 auth = Blueprint('auth', __name__)
 
@@ -30,11 +33,11 @@ def sign_up():
         elif password1 != password2:
             flash('Senhas utilizadas nao são iguais.', category='error')
         else:
-            # new_user = Users(name=name,registration=registration,password=generate_password_hash(password1, method='sha256'))
-            # session.add(new_user)
-            # session.commit()
-            # session.close()
-            # flash('Conta criada!', category='success')
+            new_user = Users(name=name,registration=registration,password=generate_password_hash(password1, method='sha256'),credits=0)
+            session.add(new_user)
+            session.commit()
+            session.close()
+            flash('Conta criada!', category='success')
             return redirect(url_for('views.home'))
           
 

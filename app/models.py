@@ -1,17 +1,14 @@
 
 from sqlalchemy import Column, String, Integer,Float
 from flask_login import UserMixin
-from sqlalchemy.sql import func
-from sqlalchemy.ext.declarative import declarative_base
 
 
-from . import create_app
-
-app = create_app()
+from . import Base
 
 
 
-class Users(app.Base,UserMixin):
+
+class Users(Base,UserMixin):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
@@ -28,11 +25,11 @@ class Users(app.Base,UserMixin):
 
 
 
-class UserSchema(app.ma.Schema):
-    class Meta:
-        fields = ("id", "name", "registration","credits","password")
+# class UserSchema(ma.Schema):
+#     class Meta:
+#         fields = ("id", "name", "registration","credits","password")
 
-user_schema = UserSchema()
-users_schema = UserSchema(many=True)
+# user_schema = UserSchema()
+# users_schema = UserSchema(many=True)
 
 
