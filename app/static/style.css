@@ -3,7 +3,19 @@
     /* height: 100%; */
 }
 
-/* .container {
-    height: 100%;
-    background-color: rgb(5, 5, 110);
-} */
+
+.container {
+    margin-top: 200px;
+}
+
+.data_user {
+    align-items: center;
+    justify-content: left;
+    font-size: 20px;
+    color: rgb(2, 2, 134);
+}
+
+.image_user {
+    height: 100px;
+    width: 100px;
+}

@@ -1,35 +1,31 @@
 
-from sqlalchemy import Column, String, Integer,Float
 from flask_login import UserMixin
 
-
-from . import Base
-
+from . import db
 
 
-
-class Users(Base,UserMixin):
-    __tablename__ = 'users'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String(80), nullable=False)
-    registration = Column(String(100), unique=True, nullable=False)
-    credits = Column(Float,default=0, nullable=False)
-    password = Column(String(100), nullable=False)
-
-    def __init__(self,name,registration,credits,password):
-        self.name = name
-        self.registration = registration
-        self.credits = credits
-        self.password = password
+# class Payment(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     credits = db.Column(db.Float,default=0, nullable=False)
+#     validation = db.Column(db.Boolean,default=False)
 
 
 
-# class UserSchema(ma.Schema):
-#     class Meta:
-#         fields = ("id", "name", "registration","credits","password")
+class Users(db.Model,UserMixin):
+    #  __tablename__ = 'users'
 
-# user_schema = UserSchema()
-# users_schema = UserSchema(many=True)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    registration = db.Column(db.String(100), unique=True, nullable=False)
+    credits = db.Column(db.Float,default=0, nullable=False)
+    password = db.Column(db.String(100), nullable=False)
+
+    # def __init__(self,name,registration,credits,password):
+    #     self.name = name
+    #     self.registration = registration
+    #     self.credits = credits
+    #     self.password = password
+
+
 
 

@@ -3,7 +3,14 @@
 <title>{% block title %} Home {% endblock %}</title>
 
 {% block content %}
-    <h1>Página Home</h1>
+    <div class="container">
+        <div class="data_user">
+            <img src="/static/img/images.png" alt="Imagem do perfil do usuário" class="image_user">
+            <div>Usuário: {{user.name}}</div>
+            <div>Identificação única: {{user.registration}}</div>
+            <div>Créditos:R${{user.credits}}</div>
+        </div>  
+    </div>
 {% endblock %}
 
 

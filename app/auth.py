@@ -1,13 +1,9 @@
-from crypt import methods
-from unicodedata import category
-from xmlrpc.client import boolean
 from flask import Blueprint, render_template, request,flash, url_for,redirect
-
 from  werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_user, logout_user,login_required, current_user
+
 from .models import Users
-from . import session
-
-
+from . import db
 
 auth = Blueprint('auth', __name__)
 
@@ -18,18 +14,20 @@ def login():
         registration = request.form.get('registration')
         password = request.form.get('password')
 
-        user = session.query(Users).filter_by(registration=registration).first()
+        user = Users.query.filter_by(registration=registration).first()
 
         if user:
             if check_password_hash(user.password, password):
                 flash('Login realizado com sucesso', category='sucess')
+                login_user(user, remember=True)
+                return redirect(url_for('views.home'))
             else:
                 flash('Senha incorreta, tente novamente', category='error')
 
         else:
             flash('Identificação única não existe.', category='error')
 
-    return render_template("login.html", boolean=True)
+    return render_template("login.html", user=current_user)
 
 
 @auth.route('/sign_up',methods=['GET', 'POST'])
@@ -40,7 +38,7 @@ def sign_up():
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
-        user = session.query(Users).filter_by(registration=registration).first()
+        user = Users.query.filter_by(registration=registration).first()
 
         if user:
             flash('Identificaão única existente', category='error')
@@ -52,12 +50,19 @@ def sign_up():
             flash('Senhas utilizadas nao são iguais.', category='error')
         else:
             new_user = Users(name=name,registration=registration,password=generate_password_hash(password1, method='sha256'),credits=0)
-            session.add(new_user)
-            session.commit()
-            session.close()
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(user, remember=True)
+            db.session.close()
             flash('Conta criada!', category='success')
             return redirect(url_for('views.home'))
+    return render_template("sign_up.html", user=current_user)
           
 
+@auth.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('auth.login'))
 
-    return render_template("sign_up.html")
+    
