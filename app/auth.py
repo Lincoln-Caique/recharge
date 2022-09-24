@@ -14,7 +14,21 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    
+    if request.method == 'POST':
+        registration = request.form.get('registration')
+        password = request.form.get('password')
+
+        user = session.query(Users).filter_by(registration=registration).first()
+
+        if user:
+            if check_password_hash(user.password, password):
+                flash('Login realizado com sucesso', category='sucess')
+            else:
+                flash('Senha incorreta, tente novamente', category='error')
+
+        else:
+            flash('Identificação única não existe.', category='error')
+
     return render_template("login.html", boolean=True)
 
 
@@ -26,7 +40,11 @@ def sign_up():
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
-        if len(registration) < 11:
+        user = session.query(Users).filter_by(registration=registration).first()
+
+        if user:
+            flash('Identificaão única existente', category='error')
+        elif len(registration) < 11:
             flash('Identificação única incorreta.', category='error')
         elif len(name) == 0:
             flash('Nome válido deve ter mais caracteres.', category='error')
