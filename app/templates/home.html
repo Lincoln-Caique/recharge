@@ -9,6 +9,10 @@
             <div>Usuário: {{user.name}}</div>
             <div>Identificação única: {{user.registration}}</div>
             <div>Créditos:R${{user.credits}}</div>
+            <form method="POST">
+                <input type="credits" name="credits" id="credits" placeholder="Digite o valor da recarga">
+                <button type="submit" class="btn btn-primary">Recarregar</button>
+            </form>
         </div>  
     </div>
 {% endblock %}
